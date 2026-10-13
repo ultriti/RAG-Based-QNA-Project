@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#101322" />
+    <title>PaperMind — PDF Knowledge Assistant</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" id="sidebar">
+        <a class="brand" href="#" aria-label="PaperMind home">
+          <span class="brand-mark"
+            ><svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M6 3.75h8l4 4V20.25H6z" />
+              <path d="M14 3.75v4h4M9 12h6M9 15.5h6" /></svg
+          ></span>
+          <span class="brand-name">paper<span>mind</span></span>
+        </a>
+
+        <button class="new-chat-btn" id="newChatBtn">
+          <span>＋</span> New conversation
+        </button>
+
+        <div class="sidebar-label">WORKSPACE</div>
+        <button class="nav-item active" id="chatNav">
+          <span class="nav-icon">◈</span> AI Chat
+        </button>
+        <button class="nav-item" id="documentsNav">
+          <span class="nav-icon">▤</span> Documents
+          <span class="nav-count" id="docCount">0</span>
+        </button>
+
+        <div class="sidebar-divider"></div>
+        <div class="sidebar-label">YOUR LIBRARY</div>
+        <div class="library-list" id="libraryList">
+          <div class="library-empty">
+            <span class="tiny-file">▧</span
+            ><span>Your PDFs will appear here</span>
+          </div>
+        </div>
+
+        <div class="sidebar-spacer"></div>
+        <div class="sidebar-help">
+          <div class="help-icon">✦</div>
+          <div>
+            <strong>Answers grounded in your files</strong>
+            <p>Ask questions and explore your documents faster.</p>
+          </div>
+        </div>
+        <div class="profile-row">
+          <div class="avatar">PM</div>
+          <div class="profile-copy">
+            <strong>Personal workspace</strong><span>PDF assistant</span>
+          </div>
+          <span class="profile-menu">•••</span>
+        </div>
+      </aside>
+
+      <main class="main-area">
+        <header class="topbar">
+          <button
+            class="mobile-menu"
+            id="mobileMenuBtn"
+            aria-label="Open navigation"
+          >
+            ☰
+          </button>
+          <div class="breadcrumb">
+            <span>Workspace</span><span class="crumb-slash">/</span
+            ><strong id="topbarSection">AI Chat</strong>
+          </div>
+          <div class="topbar-right">
+            <span class="connection-dot" id="connectionDot"></span>
+            <span class="connection-label" id="connectionLabel"
+              >Checking API…</span
+            >
+            <button
+              class="icon-button"
+              id="healthRefreshBtn"
+              title="Check API connection"
+              aria-label="Check API connection"
+            >
+              ↻
+            </button>
+          </div>
+        </header>
+
+        <section class="view active-view" id="chatView">
+          <div class="chat-heading">
+            <div>
+              <div class="eyebrow">
+                <span class="eyebrow-spark">✦</span> YOUR DOCUMENT INTELLIGENCE
+              </div>
+              <h1>
+                Your knowledge,<br class="mobile-break" />
+                in conversation.
+              </h1>
+              <p class="subtitle">
+                Ask questions across your PDFs. Get focused answers with source
+                references.
+              </p>
+            </div>
+            <button class="secondary-button" id="uploadTopBtn">
+              <span>↑</span> Add documents
+            </button>
+          </div>
+
+          <div class="chat-layout">
+            <div class="chat-column">
+              <div class="conversation" id="conversation" aria-live="polite">
+                <div class="welcome-card" id="welcomeCard">
+                  <div class="welcome-icon">
+                    <svg viewBox="0 0 48 48" aria-hidden="true">
+                      <path d="M12 7.5h16l8 8V40H12z" />
+                      <path d="M28 7.5v8h8M18 23h12M18 29h12M18 35h7" />
+                    </svg>
+                  </div>
+                  <h2>What would you like to learn?</h2>
+                  <p>
+                    Upload a PDF to get started, then ask a question. I'll find
+                    relevant passages and answer using your documents.
+                  </p>
+                  <div class="suggestion-grid">
+                    <button
+                      class="suggestion"
+                      data-question="Summarize the main ideas in my document."
+                    >
+                      <span class="suggestion-icon">✧</span
+                      ><span
+                        ><strong>Summarize a document</strong
+                        ><small>Get the key takeaways</small></span
+                      ><span class="suggestion-arrow">↗</span>
+                    </button>
+                    <button
+                      class="suggestion"
+                      data-question="Explain the most important concepts in simple terms."
+                    >
+                      <span class="suggestion-icon">⌘</span
+                      ><span
+                        ><strong>Explain key concepts</strong
+                        ><small>Make complex ideas clearer</small></span
+                      ><span class="suggestion-arrow">↗</span>
+                    </button>
+                    <button
+                      class="suggestion"
+                      data-question="What are the important definitions and terms?"
+                    >
+                      <span class="suggestion-icon">≡</span
+                      ><span
+                        ><strong>Find definitions</strong
+                        ><small>Locate terms and meanings</small></span
+                      ><span class="suggestion-arrow">↗</span>
+                    </button>
+                    <button
+                      class="suggestion"
+                      data-question="Create five study questions based on my document."
+                    >
+                      <span class="suggestion-icon">◎</span
+                      ><span
+                        ><strong>Prepare for an exam</strong
+                        ><small>Generate practice questions</small></span
+                      ><span class="suggestion-arrow">↗</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="composer-wrap">
+                <form class="composer" id="chatForm">
+                  <textarea
+                    id="questionInput"
+                    rows="1"
+                    placeholder="Ask anything about your uploaded PDFs…"
+                    aria-label="Your question"
+                    disabled
+                  ></textarea>
+                  <div class="composer-bottom">
+                    <div class="composer-hint">
+                      <span class="hint-spark">✦</span> Answers are grounded in
+                      your documents
+                    </div>
+                    <div class="composer-actions">
+                      <span class="enter-hint">Enter to send</span>
+                      <button
+                        class="send-button"
+                        id="sendBtn"
+                        type="submit"
+                        disabled
+                        aria-label="Send question"
+                      >
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                          <path d="M12 19V5M6 11l6-6 6 6" />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                </form>
+                <p class="disclaimer">
+                  AI can make mistakes. Verify important information against
+                  your source documents.
+                </p>
+              </div>
+            </div>
+
+            <aside class="right-panel">
+              <div class="panel-heading">
+                <div>
+                  <span class="panel-kicker">KNOWLEDGE BASE</span>
+                  <h3>Your documents</h3>
+                </div>
+                <span class="doc-badge" id="panelDocCount">0 files</span>
+              </div>
+              <div
+                class="dropzone"
+                id="dropzone"
+                tabindex="0"
+                role="button"
+                aria-label="Upload PDF documents"
+              >
+                <div class="upload-icon">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 16V4M7 9l5-5 5 5" />
+                    <path d="M5 14v5h14v-5" />
+                  </svg>
+                </div>
+                <strong>Drop your PDFs here</strong>
+                <span
+                  >or
+                  <button class="text-button" id="browseBtn" type="button">
+                    browse files
+                  </button></span
+                >
+                <small>PDF files only</small>
+              </div>
+              <input
+                id="fileInput"
+                type="file"
+                accept="application/pdf,.pdf"
+                multiple
+                hidden
+              />
+              <div class="upload-progress-wrap" id="uploadProgressWrap" hidden>
+                <div class="upload-progress-meta">
+                  <span id="uploadProgressName">Uploading PDF…</span
+                  ><span id="uploadProgressPercent">Working</span>
+                </div>
+                <div class="progress-track">
+                  <div class="progress-bar" id="uploadProgressBar"></div>
+                </div>
+              </div>
+              <div class="document-list" id="documentList">
+                <div class="empty-docs">
+                  <div class="empty-doc-icon">▤</div>
+                  <strong>No documents yet</strong
+                  ><span>Upload a PDF to build your knowledge base.</span>
+                </div>
+              </div>
+              <div class="panel-footer">
+                <span class="secure-icon">◇</span
+                ><span>Files are processed by your local API</span>
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <section class="view documents-view" id="documentsView">
+          <div class="documents-heading">
+            <div>
+              <div class="eyebrow">
+                <span class="eyebrow-spark">✦</span> KNOWLEDGE BASE
+              </div>
+              <h1>Your documents</h1>
+              <p class="subtitle">
+                Upload PDFs to index their content for question answering.
+              </p>
+            </div>
+            <button class="primary-button" id="uploadDocumentsBtn">
+              <span>↑</span> Upload PDFs
+            </button>
+          </div>
+          <div class="documents-summary">
+            <div class="summary-icon">▤</div>
+            <div>
+              <span>Indexed documents</span
+              ><strong id="summaryDocCount">0 files</strong>
+            </div>
+            <div class="summary-divider"></div>
+            <div class="summary-icon purple">✧</div>
+            <div>
+              <span>Searchable chunks</span
+              ><strong id="summaryChunkCount">0 chunks</strong>
+            </div>
+          </div>
+          <div class="all-documents-card">
+            <div class="all-documents-title">
+              <h2>All files</h2>
+              <span id="allDocsLabel">0 documents</span>
+            </div>
+            <div id="allDocumentsList" class="all-documents-list">
+              <div class="empty-docs large-empty">
+                <div class="empty-doc-icon">▤</div>
+                <strong>Your library is ready</strong
+                ><span>Uploaded PDFs will be listed here.</span>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div class="toast-region" id="toastRegion" aria-live="polite"></div>
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+    <script src="script.js"></script>
+  </body>
+</html>
