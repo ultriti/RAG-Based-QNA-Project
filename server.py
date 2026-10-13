@@ -467,6 +467,18 @@ prompt = ChatPromptTemplate.from_messages(
 class QuestionRequest(BaseModel):
     question: str = Field(..., min_length=1, max_length=5000)
 
+def extract_text(content) -> str:
+    if isinstance(content, str):
+        return content
+    if isinstance(content, list):
+        parts = []
+        for block in content:
+            if isinstance(block, str):
+                parts.append(block)
+            elif isinstance(block, dict) and block.get("type") == "text":
+                parts.append(block.get("text", ""))
+        return "".join(parts).strip()
+    return str(content)
 
 class QuestionResponse(BaseModel):
     question: str
@@ -615,7 +627,7 @@ def ask_question(request: QuestionRequest):
 
         return QuestionResponse(
             question=question,
-            answer=str(response.content),
+            answer=extract_text(response.content),
             sources=sources,
         )
 
