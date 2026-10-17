@@ -464,8 +464,7 @@ prompt = ChatPromptTemplate.from_messages(
 # Request schemas
 # --------------------------------------------------
 
-class QuestionRequest(BaseModel):
-    question: str = Field(..., min_length=1, max_length=5000)
+
 
 def extract_text(content) -> str:
     if isinstance(content, str):
